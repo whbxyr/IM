@@ -1,14 +1,24 @@
-var WebSocketServer = require('websocket').server;
-var http = require('http');
+let WebSocketServer = require('websocket').server;
+let http = require('http');
+let connections = [];
 
 var server = http.createServer(function(request, response) {
   console.log((new Date()) + ' Received request for ' + request.url);
   response.writeHead(404);
   response.end();
 });
-server.listen(8080, function() {
-  console.log((new Date()) + ' Server is listening on port 8080');
+server.listen(8000, function() {
+  console.log((new Date()) + ' Server is listening on port 8000');
 });
+
+function sendToOthersAll(connections, msg, uid) {
+  for (let i = 0, len = connections.length; i < len; i++) {
+    let connection = connections[i];
+    if (connection.uid !== uid) {
+      connection.sendUTF(msg);
+    }
+  }
+}
 
 wsServer = new WebSocketServer({
   httpServer: server,
@@ -34,15 +44,18 @@ wsServer.on('request', function(request) {
   }
   
   var connection = request.accept('echo-protocol', request.origin);
+  connections.push(connection);
   console.log((new Date()) + ' Connection accepted.');
-  connection.on('message', function(message) {
+  connection.on('message', function(message) { 
     if (message.type === 'utf8') {
       console.log('Received Message: ' + message.utf8Data);
-      connection.sendUTF(message.utf8Data);
-    }
-    else if (message.type === 'binary') {
+      let msg = JSON.parse(message.utf8Data);
+      let uid = msg.uid;
+      connection.uid = uid;
+      sendToOthersAll(connections, msg.content, uid);
+    } else if (message.type === 'binary') {
       console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-      connection.sendBytes(message.binaryData);
+      // connection.sendBytes(message.binaryData);
     }
   });
   connection.on('close', function(reasonCode, description) {
