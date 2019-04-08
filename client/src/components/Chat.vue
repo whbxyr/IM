@@ -17,6 +17,7 @@
 
 <script>
 import ws from 'websocket';
+import localforage from 'localforage';
 
 export default {
   name: 'Chat',
@@ -44,11 +45,15 @@ export default {
             content: `用户 ${uid} 进房间了`
           })
           client.send(msg)
+          this.setMsg(JSON.parse(msg))
         }
         client.onclose = () => {
           this.status = 'beforeLogin'
         }
         client.onmessage = (e) => {
+          this.setMsg({
+            content: e.data
+          })
           alert(e.data)
         }
       } else {
@@ -69,9 +74,21 @@ export default {
         content: `用户 ${uid} 发送了一条消息`
       })
       this.client.send(msg)
+      this.setMsg(JSON.parse(msg))
+    },
+    async setMsg(msg) {
+      let oldMsg = await localforage.getItem('message');
+      if (!oldMsg) {
+        oldMsg = []
+      }
+      oldMsg.push(msg)
+      await localforage.setItem('message', oldMsg)
     }
   },
   mounted () {
+    localforage.getItem('message').then(value => {
+      console.log(value)
+    })
   }
 }
 </script>
