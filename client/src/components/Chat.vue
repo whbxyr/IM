@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="ctn">
-      <input v-model="uid" class="text">
+      <input v-model="uid" class="text" placeholder="请输入用户 id">
       <div :class="status === 'beforeLogin' ? 'status' : 'status active'">
         {{status === 'beforeLogin' ? '未登录' : '已登录'}}
       </div>
