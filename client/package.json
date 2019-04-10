@@ -14,7 +14,7 @@
     "localforage": "^1.7.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
-    "vue": "^2.5.16",
+    "vue": "^2.6.10",
     "vue-router": "^3.0.1",
     "websocket": "^1.0.28"
   },
@@ -50,7 +50,7 @@
     "url-loader": "^1.0.1",
     "vue-loader": "^15.0.3",
     "vue-style-loader": "^4.1.0",
-    "vue-template-compiler": "^2.5.2",
+    "vue-template-compiler": "^2.6.10",
     "webpack": "^4.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-cli": "^3.0.3",
