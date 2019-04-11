@@ -14,5 +14,15 @@ module.exports = {
     // "@babel/plugin-proposal-numeric-separator",
     // "@babel/plugin-proposal-throw-expressions"
   ],
-  plugins: ["transform-vue-jsx", "@babel/plugin-transform-runtime"]
+  plugins: [
+    "transform-vue-jsx",
+    "@babel/plugin-transform-runtime",
+    [
+      "component",
+      {
+        "libraryName": "element-ui",
+        "styleLibraryName": "theme-chalk"
+      }
+    ]
+  ]
 }

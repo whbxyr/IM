@@ -28,6 +28,7 @@
     "autoprefixer": "^8.3.0",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^8.0.0-beta.3",
+    "babel-plugin-component": "^1.1.1",
     "babel-plugin-transform-vue-jsx": "^4.0.1",
     "chalk": "^2.4.1",
     "copy-webpack-plugin": "^4.0.1",

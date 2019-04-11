@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <div class="ctn">
       <input v-model="uid" class="text" placeholder="请输入用户 id">
       <div :class="status === 'beforeLogin' ? 'status' : 'status active'">
@@ -12,7 +12,12 @@
         <div class="send-btn" @click="sendMsg">发送消息</div>
       </div>
     </div>
-  </div>
+  </div> -->
+  <el-form>
+    <el-form-item label="活动名称">
+      <el-input></el-input>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>

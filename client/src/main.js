@@ -3,8 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import { Form, FormItem, Input } from 'element-ui'
+import 'element-ui/lib/theme-chalk/form.css'
+import 'element-ui/lib/theme-chalk/form-item.css'
+import 'element-ui/lib/theme-chalk/input.css'
 
 Vue.config.productionTip = false
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
 
 /* eslint-disable no-new */
 new Vue({
