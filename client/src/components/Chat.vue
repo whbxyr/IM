@@ -1,21 +1,13 @@
 <template>
-  <!-- <div>
-    <div class="ctn">
-      <input v-model="uid" class="text" placeholder="请输入用户 id">
-      <div :class="status === 'beforeLogin' ? 'status' : 'status active'">
-        {{status === 'beforeLogin' ? '未登录' : '已登录'}}
-      </div>
-      <div class="connect" @click="connect">
-        {{status === 'beforeLogin' ? '连接 websocket' : '断开 websocket'}}
-      </div>
-      <div class="session">
-        <div class="send-btn" @click="sendMsg">发送消息</div>
-      </div>
-    </div>
-  </div> -->
-  <el-form>
-    <el-form-item label="活动名称">
-      <el-input></el-input>
+  <el-form :model="userData" label-width="100px" class="login-ctn">
+    <el-form-item label="用户 id">
+      <el-input v-model="userData.uid" placeholder="请输入用户 id"></el-input>
+    </el-form-item>
+    <el-form-item label="用户名">
+      <el-input v-model="userData.uname" placeholder="请输入用户名"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="login">进入聊天室</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -28,17 +20,24 @@ export default {
   name: 'Chat',
   data () {
     return {
+      userData: {
+        uid: '',
+        uname: '',
+      },
       status: 'beforeLogin',
-      uid: null,
       client: null
     }
   },
   methods: {
-    connect () {
+    login () {
       if (this.status === 'beforeLogin') {
-        let uid = this.uid
-        if (!uid) {
-          console.log('need uid')
+        let { uid, uname } = this.userData
+        if (!uid || !uname) {
+          this.$notify({
+            title: '提示',
+            message: '请输入完整的用户信息',
+            showClose: false
+          })
           return
         }
         let client = new ws.w3cwebsocket('ws://localhost:8000/', 'echo-protocol')
@@ -59,14 +58,8 @@ export default {
           this.setMsg({
             content: e.data
           })
-          alert(e.data)
         }
-      } else {
-        this.disConnect()
       }
-    },
-    disConnect () {
-      this.client.close()
     },
     sendMsg () {
       let uid = this.uid
@@ -99,6 +92,10 @@ export default {
 </script>
 
 <style lang="stylus">
+.login-ctn
+  width 300px
+  height 300px
+  margin 0 auto
 .ctn
   width 400px
   margin 0 auto
