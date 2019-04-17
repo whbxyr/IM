@@ -1,15 +1,20 @@
 <template>
-  <el-form :model="userData" label-width="100px" class="login-ctn">
-    <el-form-item label="用户 id">
-      <el-input v-model="userData.uid" placeholder="请输入用户 id"></el-input>
-    </el-form-item>
-    <el-form-item label="用户名">
-      <el-input v-model="userData.uname" placeholder="请输入用户名"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="login">进入聊天室</el-button>
-    </el-form-item>
-  </el-form>
+  <div>
+    <!-- 登录部分 -->
+    <el-form v-if="status === 'beforeLogin'" :model="userData" label-width="100px" class="login-ctn">
+      <el-form-item label="用户 id">
+        <el-input v-model="userData.uid" placeholder="请输入用户 id"></el-input>
+      </el-form-item>
+      <el-form-item label="用户名">
+        <el-input v-model="userData.uname" placeholder="请输入用户名"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="login">进入聊天室</el-button>
+      </el-form-item>
+    </el-form>
+    <!-- 聊天室部分 -->
+    <div v-if="status === 'logined'">{{JSON.stringify(history)}}</div>
+  </div>
 </template>
 
 <script>
@@ -25,7 +30,8 @@ export default {
         uname: '',
       },
       status: 'beforeLogin',
-      client: null
+      client: null,
+      history: null
     }
   },
   methods: {
@@ -49,7 +55,9 @@ export default {
             content: `用户 ${uid} 进房间了`
           })
           client.send(msg)
-          this.setMsg(JSON.parse(msg))
+          localforage.getItem('message').then(history => {
+            this.history = history
+          })
         }
         client.onclose = () => {
           this.status = 'beforeLogin'
