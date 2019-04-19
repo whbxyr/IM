@@ -13,7 +13,11 @@
       </el-form-item>
     </el-form>
     <!-- 聊天室部分 -->
-    <div v-if="status === 'logined'">{{JSON.stringify(history)}}</div>
+    <div v-if="status === 'logined'">
+      <div v-for="(item, index) in history" :key="index">
+        {{item.content}}
+      </div>
+    </div>
   </div>
 </template>
 
