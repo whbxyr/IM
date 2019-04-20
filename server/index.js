@@ -52,7 +52,8 @@ wsServer.on('request', function(request) {
       let msg = JSON.parse(message.utf8Data);
       let uid = msg.uid;
       connection.uid = uid;
-      sendToOthersAll(connections, msg.content, uid);
+      msg.time = +new Date
+      sendToOthersAll(connections, JSON.stringify(msg), uid);
     } else if (message.type === 'binary') {
       console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
       // connection.sendBytes(message.binaryData);
