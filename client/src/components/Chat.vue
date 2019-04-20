@@ -13,10 +13,12 @@
       </el-form-item>
     </el-form>
     <!-- 聊天室部分 -->
-    <div v-if="status === 'logined'">
-      <div v-for="(item, index) in history" :key="index">
-        {{item.content}}
+    <div v-if="status === 'logined'" class="room-ctn">
+      <div v-for="(item, index) in history" :key="index"
+        :class="item.uid === userData.uid ? 'right' : 'left'">
+        用户 {{item.uid}} : {{item.content}}
       </div>
+      <el-input v-model="msg" placeholder="输入聊天内容" @blur="sendMsg"></el-input>
     </div>
   </div>
 </template>
@@ -35,7 +37,8 @@ export default {
       },
       status: 'beforeLogin',
       client: null,
-      history: null
+      history: [],
+      msg: ''
     }
   },
   methods: {
@@ -60,7 +63,9 @@ export default {
           })
           client.send(msg)
           localforage.getItem('message').then(history => {
-            this.history = history
+            if (history) {
+              this.history.push(...history)
+            }
           })
         }
         client.onclose = () => {
@@ -73,18 +78,14 @@ export default {
         }
       }
     },
-    sendMsg () {
-      let uid = this.uid
-      if (!uid) {
-        console.log('need uid')
-        return
+    async sendMsg () {
+      let msg = {
+        uid: this.userData.uid,
+        content: this.msg
       }
-      let msg = JSON.stringify({
-        uid,
-        content: `用户 ${uid} 发送了一条消息`
-      })
-      this.client.send(msg)
-      this.setMsg(JSON.parse(msg))
+      this.client.send(JSON.stringify(msg))
+      await this.setMsg(msg)
+      this.history.push(msg)
     },
     async setMsg(msg) {
       let oldMsg = await localforage.getItem('message');
@@ -108,6 +109,13 @@ export default {
   width 300px
   height 300px
   margin 0 auto
+.room-ctn
+  width 700px
+  margin 0 atuo
+  .left
+    text-align left
+  .right
+    text-align right
 .ctn
   width 400px
   margin 0 auto
