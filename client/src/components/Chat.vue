@@ -59,7 +59,8 @@ export default {
           this.status = 'logined'
           let msg = JSON.stringify({
             uid,
-            content: `用户 ${uid} 进房间了`
+            content: `用户 ${uid} 进房间了`,
+            time: +new Date
           })
           client.send(msg)
           localforage.getItem('message').then(history => {
@@ -81,7 +82,8 @@ export default {
     async sendMsg () {
       let msg = {
         uid: this.userData.uid,
-        content: this.msg
+        content: this.msg,
+        time: +new Date
       }
       this.client.send(JSON.stringify(msg))
       await this.setMsg(msg)

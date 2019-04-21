@@ -46,13 +46,12 @@ wsServer.on('request', function(request) {
   var connection = request.accept('echo-protocol', request.origin);
   connections.push(connection);
   console.log((new Date()) + ' Connection accepted.');
-  connection.on('message', function(message) { 
+  connection.on('message', function(message) {
     if (message.type === 'utf8') {
       console.log('Received Message: ' + message.utf8Data);
       let msg = JSON.parse(message.utf8Data);
       let uid = msg.uid;
       connection.uid = uid;
-      msg.time = +new Date
       sendToOthersAll(connections, JSON.stringify(msg), uid);
     } else if (message.type === 'binary') {
       console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
