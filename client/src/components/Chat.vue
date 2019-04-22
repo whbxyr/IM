@@ -18,7 +18,7 @@
         :class="item.uid === userData.uid ? 'right' : 'left'">
         用户 {{item.uid}} : {{item.content}}
       </div>
-      <el-input v-model="msg" placeholder="输入聊天内容" @blur="sendMsg"></el-input>
+      <el-input class="input-ctn" v-model="msg" placeholder="输入聊天内容" @blur="sendMsg"></el-input>
     </div>
   </div>
 </template>
@@ -107,17 +107,25 @@ export default {
 </script>
 
 <style lang="stylus">
+html
+  width 100%
+  height 100%
 .login-ctn
   width 300px
   height 300px
   margin 0 auto
 .room-ctn
-  width 700px
+  position fixed
+  width 100%
+  height 100%
   margin 0 atuo
   .left
     text-align left
   .right
     text-align right
+  .input-ctn
+    position absolute
+    bottom 0
 .ctn
   width 400px
   margin 0 auto
