@@ -107,13 +107,15 @@ export default {
 </script>
 
 <style lang="stylus">
-html
+html, body
   width 100%
   height 100%
+  margin 0
+  padding 0
 .login-ctn
   width 300px
   height 300px
-  margin 0 auto
+  margin 60px auto
 .room-ctn
   position fixed
   width 100%
