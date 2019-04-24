@@ -79,6 +79,7 @@ export default {
         }
       }
     },
+    // 发送信道消息
     async sendMsg () {
       let msg = {
         uid: this.userData.uid,
@@ -86,9 +87,11 @@ export default {
         time: +new Date
       }
       this.client.send(JSON.stringify(msg))
+      // 将消息同步到 IndexedDB 中
       await this.setMsg(msg)
       this.history.push(msg)
     },
+    // 将消息保存到 IndexedDB 中
     async setMsg(msg) {
       let oldMsg = await localforage.getItem('message');
       if (!oldMsg) {
