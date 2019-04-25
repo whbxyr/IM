@@ -45,6 +45,7 @@ export default {
     login () {
       if (this.status === 'beforeLogin') {
         let { uid, uname } = this.userData
+        // 用户 id 以及用户名必传，否则弹出提示
         if (!uid || !uname) {
           this.$notify({
             title: '提示',
