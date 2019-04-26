@@ -103,6 +103,7 @@ export default {
     }
   },
   mounted () {
+    // 页面加载完成时从 IndexedDB 中取出数据
     localforage.getItem('message').then(value => {
       console.log(value)
     })
