@@ -71,6 +71,7 @@ export default {
           })
         }
         client.onclose = () => {
+          // 断开连接后修改登录状态为未登录
           this.status = 'beforeLogin'
         }
         client.onmessage = (e) => {
