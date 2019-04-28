@@ -65,6 +65,7 @@ export default {
           })
           client.send(msg)
           localforage.getItem('message').then(history => {
+            // 获取在 IndexedDB 中存储的聊天历史消息
             if (history) {
               this.history.push(...history)
             }
