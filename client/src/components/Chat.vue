@@ -97,6 +97,7 @@ export default {
     // 将消息保存到 IndexedDB 中
     async setMsg(msg) {
       let oldMsg = await localforage.getItem('message');
+      // 没有历史消息
       if (!oldMsg) {
         oldMsg = []
       }
