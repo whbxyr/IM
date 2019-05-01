@@ -102,6 +102,7 @@ export default {
         oldMsg = []
       }
       oldMsg.push(msg)
+      // 新旧消息合并后实时存入 IndexedDB 中
       await localforage.setItem('message', oldMsg)
     }
   },
