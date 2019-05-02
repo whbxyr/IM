@@ -42,6 +42,7 @@ export default {
     }
   },
   methods: {
+    // 登录
     login () {
       if (this.status === 'beforeLogin') {
         let { uid, uname } = this.userData
